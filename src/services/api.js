@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // 1. Dynamic Base URL (Switch between Local and Production Vercel)
 const API = axios.create({
-    baseURL: process.env.VITE_API_URL || 'https://health-mate-backend-2fsdaccjg-mrawaisaftabs-projects.vercel.app/api',
+    baseURL: process.env.VITE_API_URL,
     timeout: 15000, // 15s timeout - essential for mobile networks
 });
 
