@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 const Timeline = () => {
     const [reports, setReports] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [deletingId, setDeletingId] = useState(null);
 
     useEffect(() => {
         const fetchReports = async () => {
@@ -23,24 +22,6 @@ const Timeline = () => {
         };
         fetchReports();
     }, []);
-
-    const handleDelete = async (reportId) => {
-        if (!window.confirm("Pakka delete karna hai?")) return;
-        setDeletingId(reportId);
-        try {
-            const token = localStorage.getItem('token');
-            await axios.delete(
-                `${import.meta.env.VITE_API_URL}/api/reports/${reportId}`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-            setReports(prev => prev.filter(r => r._id !== reportId));
-        } catch (err) {
-            console.error("Delete error", err);
-            alert("Delete nahi hua, dobara try karo!");
-        } finally {
-            setDeletingId(null);
-        }
-    };
 
     return (
         <>
@@ -136,18 +117,6 @@ const Timeline = () => {
                 .stats-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
                 .stat-chip { background: #F2F2F7; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #8E8E93; }
 
-                /* Delete button */
-                .delete-btn {
-                    margin-top: 14px; width: 100%; padding: 10px;
-                    background: #FFF2F2; border: 1px solid #FFD6D6;
-                    border-radius: 12px; color: #FF3B30;
-                    font-weight: 700; font-size: 14px;
-                    cursor: pointer; transition: opacity 0.2s;
-                    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-                }
-                .delete-btn:disabled { background: #F2F2F7; border-color: #E5E5EA; color: #AEAEB2; cursor: not-allowed; }
-                .delete-btn:not(:disabled):hover { opacity: 0.85; }
-
                 @media (min-width: 600px) {
                     .sticky-header { padding: 40px 40px 16px; }
                     .content { padding: 20px 40px 0; }
@@ -218,14 +187,6 @@ const Timeline = () => {
                                         <span className="stat-chip">🔒 Private</span>
                                         {report.aiAnalysis?.keyFindings && <span className="stat-chip">✦ Key Findings</span>}
                                     </div>
-
-                                    {/* Delete Button */}
-                                    <button
-                                        className="delete-btn"
-                                        onClick={() => handleDelete(report._id)}
-                                        disabled={deletingId === report._id}>
-                                        {deletingId === report._id ? '⏳ Deleting...' : '🗑️ Delete Report'}
-                                    </button>
                                 </div>
                             </motion.div>
                         ))
