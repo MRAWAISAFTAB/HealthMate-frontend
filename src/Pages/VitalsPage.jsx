@@ -80,7 +80,7 @@ const VitalsPage = () => {
 
     const fetchVitals = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/vitals`, { headers: { Authorization: `Bearer ${token}` } });
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/vitals`, { headers: { Authorization: `Bearer ${token}` } });
             setVitals(res.data);
         } catch (err) { console.error("Fetch error:", err); }
     };
@@ -90,7 +90,7 @@ const VitalsPage = () => {
     const handleSave = async () => {
         if (!value) return;
         try {
-            await axios.post('http://localhost:5000/api/vitals/add',
+            await axios.post('${import.meta.env.VITE_API_URL}/api/vitals/add',
                 { type, value, unit: typeConfig[type].unit },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -100,7 +100,7 @@ const VitalsPage = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/vitals/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+            await axios.delete(`${import.meta.env.VITE_API_URL}/api/vitals/${id}`, { headers: { Authorization: `Bearer ${token}` } });
             setVitals(prev => prev.filter(v => v._id !== id));
         } catch (err) { alert("Delete nahi hua!"); }
     };
