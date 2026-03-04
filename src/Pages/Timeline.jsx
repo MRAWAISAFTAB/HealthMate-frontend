@@ -10,7 +10,7 @@ const Timeline = () => {
         const fetchReports = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await axios.get('${import.meta.env.VITE_API_URL}/api/reports/my-history', {
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/reports/my-history`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setReports(res.data);

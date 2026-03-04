@@ -29,7 +29,7 @@ const UploadPage = () => {
     formData.append('userId', userData.id);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('${import.meta.env.VITE_API_URL}/api/reports/upload', formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/reports/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
       });
       setResult(response.data.data);

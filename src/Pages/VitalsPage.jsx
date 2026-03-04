@@ -90,7 +90,7 @@ const VitalsPage = () => {
     const handleSave = async () => {
         if (!value) return;
         try {
-            await axios.post('${import.meta.env.VITE_API_URL}/api/vitals/add',
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/vitals/add`,
                 { type, value, unit: typeConfig[type].unit },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
